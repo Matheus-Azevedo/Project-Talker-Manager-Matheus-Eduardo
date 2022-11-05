@@ -12,6 +12,7 @@ app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
 
+// Start the application on port 3000
 app.listen(PORT, () => {
   console.log('Online');
 });
