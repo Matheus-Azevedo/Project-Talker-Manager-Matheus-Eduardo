@@ -1,5 +1,7 @@
+// Requires modules
 const express = require('express');
 const bodyParser = require('body-parser');
+const { readTalkerFile } = require('./talker');
 
 const app = express();
 app.use(bodyParser.json());
@@ -15,4 +17,12 @@ app.get('/', (_request, response) => {
 // Start the application on port 3000
 app.listen(PORT, () => {
   console.log('Online');
+});
+
+// Routes List for Talker
+
+// ROUTE: GET /talker
+app.get('/talker', async (_request, response) => {
+  const talkers = await readTalkerFile();
+  response.status(HTTP_OK_STATUS).json(talkers);
 });
