@@ -1,6 +1,6 @@
 // Require modules
 const express = require('express');
-const { readTalkerFile } = require('../db/talker');
+const { readTalkerFile } = require('../utils/talker');
 
 const router = express.Router();
 
@@ -22,6 +22,6 @@ router.get('/:id', async (request, response) => {
     return response.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   }
   return response.status(HTTP_OK_STATUS).json(talker);
-});
+}); 
 
 module.exports = router;

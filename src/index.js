@@ -1,11 +1,15 @@
 // Requires modules
 const express = require('express');
 const bodyParser = require('body-parser');
-const getTalker = require('./routes/talkerRoutes');
+const talkerRouter = require('./routes/talkerRouter');
+const loginRouter = require('./routes/loginRouter');
 
 const app = express();
+
+// Sequence of app.use() calls
 app.use(bodyParser.json());
-app.use('/talker', getTalker);
+app.use('/talker', talkerRouter);
+app.use('/login', loginRouter);
 
 // Constants
 const HTTP_OK_STATUS = 200;
