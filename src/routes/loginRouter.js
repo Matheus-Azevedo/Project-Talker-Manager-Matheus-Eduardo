@@ -1,5 +1,7 @@
 // Require modules
 const express = require('express');
+const loginFormatValidation = require('../middlewares/loginFormatValidation');
+const loginValidation = require('../middlewares/loginValidantion');
 
 const router = express.Router();
 
@@ -7,7 +9,7 @@ const router = express.Router();
 const HTTP_OK_STATUS = 200;
 
 // POST /login
-router.post('/', async (_request, response) => {
+router.post('/', loginValidation, loginFormatValidation, async (_request, response) => {
   const tokenLength = 16;
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
