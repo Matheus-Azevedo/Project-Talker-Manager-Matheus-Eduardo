@@ -1,7 +1,7 @@
 // Constants
 const BAD_REQUEST_STATUS = 400;
 
-const loginValidation = (request, response, next) => {
+const loginExistsValidation = (request, response, next) => {
   const { email, password } = request.body;
   if (!email) {
     return response.status(BAD_REQUEST_STATUS)
@@ -14,4 +14,4 @@ const loginValidation = (request, response, next) => {
   next();
 };
 
-module.exports = loginValidation;
+module.exports = loginExistsValidation;
