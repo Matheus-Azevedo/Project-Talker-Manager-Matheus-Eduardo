@@ -3,7 +3,8 @@ const BAD_REQUEST_STATUS = 400;
 
 const nameValidation = (request, response, next) => {
   const { name } = request.body;
-  if (!name) {
+  const nameExists = name === undefined;
+  if (nameExists) {
     return response.status(BAD_REQUEST_STATUS)
       .json({ message: 'O campo "name" é obrigatório' });
   }

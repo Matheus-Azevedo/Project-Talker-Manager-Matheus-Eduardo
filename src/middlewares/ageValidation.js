@@ -3,7 +3,8 @@ const BAD_REQUEST_STATUS = 400;
 
 const ageValidation = (request, response, next) => {
   const { age } = request.body;
-  if (!age) {
+  const ageExists = age === undefined;
+  if (ageExists) {
     return response.status(BAD_REQUEST_STATUS)
       .json({ message: 'O campo "age" é obrigatório' });
   }

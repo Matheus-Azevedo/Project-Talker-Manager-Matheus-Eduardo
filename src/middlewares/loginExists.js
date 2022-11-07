@@ -3,11 +3,13 @@ const BAD_REQUEST_STATUS = 400;
 
 const loginExistsValidation = (request, response, next) => {
   const { email, password } = request.body;
-  if (!email) {
+  const emailExists = email === undefined;
+  if (emailExists) {
     return response.status(BAD_REQUEST_STATUS)
       .json({ message: 'O campo "email" é obrigatório' });
   }
-  if (!password) {
+  const passwordExists = password === undefined;
+  if (passwordExists) {
     return response.status(BAD_REQUEST_STATUS)
       .json({ message: 'O campo "password" é obrigatório' });
   }

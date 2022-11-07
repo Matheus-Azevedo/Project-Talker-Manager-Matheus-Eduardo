@@ -3,7 +3,8 @@ const BAD_REQUEST_STATUS = 400;
 
 const talkValidation = (request, response, next) => {
   const { talk } = request.body;
-  if (!talk) {
+  const talkExists = talk === undefined;
+  if (talkExists) {
     return response.status(BAD_REQUEST_STATUS).json({ message: 'O campo "talk" é obrigatório' });
   }
   next();
@@ -11,7 +12,8 @@ const talkValidation = (request, response, next) => {
 
 const watchedAtValidation = (request, response, next) => {
   const { talk: { watchedAt } } = request.body;
-  if (!watchedAt) {
+  const watchedAtExists = watchedAt === undefined;
+  if (watchedAtExists) {
     return response.status(BAD_REQUEST_STATUS)
     .json({ message: 'O campo "watchedAt" é obrigatório' });
   }
@@ -25,8 +27,8 @@ const watchedAtValidation = (request, response, next) => {
 
 const rateValidation = (request, response, next) => {
   const { talk: { rate } } = request.body;
-  console.log(rate);
-  if (rate === undefined) {
+  const rateExists = rate === undefined;
+  if (rateExists) {
     return response.status(BAD_REQUEST_STATUS).json({ message: 'O campo "rate" é obrigatório' });
   }
   const rateRegex = /^[1-5]$/i;

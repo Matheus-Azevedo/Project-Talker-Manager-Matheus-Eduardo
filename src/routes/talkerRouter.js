@@ -4,6 +4,7 @@ const { checkingAuthorization } = require('../middlewares/checkingAuthorization'
 const nameValidation = require('../middlewares/nameValidation');
 const ageValidation = require('../middlewares/ageValidation');
 const idValidation = require('../middlewares/idValidation');
+const searchValidation = require('../middlewares/searchValidation');
 const { readTalkerFile, writeTalkerFile,
         updateTalkerFile, deleteTalkerFile } = require('../utils/talker');
 const { talkValidation, watchedAtValidation,
@@ -15,6 +16,14 @@ const router = express.Router();
 const HTTP_OK_STATUS = 200;
 const CREATED_STATUS = 201;
 const NO_CONTENT_STATUS = 204;
+
+// GET /talker/search?q=searchTerm
+router.get('/search', checkingAuthorization, searchValidation, async (request, response) => {
+  const { q: query } = request.query;
+  const talkers = await readTalkerFile();
+  const talkersFiltered = talkers.filter((t) => t.name.includes(query));
+  return response.status(HTTP_OK_STATUS).json(talkersFiltered);
+});
 
 // GET /talker
 router.get('/', async (_request, response) => {
@@ -56,14 +65,6 @@ router.delete('/:id', idValidation, async (request, response) => {
   const { id } = request.params;
   await deleteTalkerFile(id);
   return response.status(NO_CONTENT_STATUS).json();
-});
-
-// GET /talker/search?q=searchTerm
-router.get('/search', async (request, response) => {
-  const { q } = request.query;
-  const talkers = await readTalkerFile();
-  const filteredTalkers = talkers.filter((t) => t.name.includes(q));
-  return response.status(HTTP_OK_STATUS).json(filteredTalkers);
 });
 
 module.exports = router;
