@@ -27,7 +27,30 @@ async function writeTalkerFile(newTalker) {
   }
 }
 
+async function updateTalkerFile(updatedTalker) {
+  try {
+    const oldTalkers = await readTalkerFile();
+    const updatedTalkers = oldTalkers
+      .map((t) => (t.id === Number(updatedTalker.id) ? updatedTalker : t));
+    await writeFile(join(__dirname, TALKER_PATH), JSON.stringify(updatedTalkers));
+  } catch (error) {
+    return console.error(`Error ao escrever no arquivo: ${error}`);
+  }
+}
+
+async function deleteTalkerFile(id) {
+  try {
+    const oldTalkers = await readTalkerFile();
+    const newTalkers = oldTalkers.filter((t) => t.id !== Number(id));
+    await writeFile(join(__dirname, TALKER_PATH), JSON.stringify(newTalkers));
+  } catch (error) {
+    return console.error(`Error ao deletar no arquivo: ${error}`);
+  }
+}
+
 module.exports = {
   readTalkerFile,
   writeTalkerFile,
+  updateTalkerFile,
+  deleteTalkerFile,
 };
