@@ -58,4 +58,12 @@ router.delete('/:id', idValidation, async (request, response) => {
   return response.status(NO_CONTENT_STATUS).json();
 });
 
+// GET /talker/search?q=searchTerm
+router.get('/search', async (request, response) => {
+  const { q } = request.query;
+  const talkers = await readTalkerFile();
+  const filteredTalkers = talkers.filter((t) => t.name.includes(q));
+  return response.status(HTTP_OK_STATUS).json(filteredTalkers);
+});
+
 module.exports = router;
